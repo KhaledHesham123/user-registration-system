@@ -20,7 +20,7 @@ Implemented **CQRS (Command Query Responsibility Segregation)** to separate read
 
 ---
 
-##  How to Run (Zero-Touch Setup)
+##  How to Run 
 
 This project is designed for a "Plug and Play" experience.
 
