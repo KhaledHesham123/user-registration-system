@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="reg-form">
+            <h3>Register</h3>
+            <input type="text" id="name" placeholder="Name">
+            <input type="email" id="email" placeholder="Email">
+            <button id="btnRegister">Register</button>
+            <button id="btnShowAll" style="margin-top: 8px; background-color: #6c757d; color: white;">Show All Users</button>
+            <div id="msg"></div>
+        </div>
+
+        <div id="userList" style="margin-top: 20px; display: none; width: 100%;">
+            <h4>Registered Users</h4>
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('btnRegister');
+        const btnShow = document.getElementById('btnShowAll');
+        const msg = document.getElementById('msg');
+
+        btn.onclick = async () => {
+            const userData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value
+            };
+
+            msg.innerText = "Processing...";
+
+            try {
+                const res = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    msg.style.color = "green";
+                    msg.innerText = data.message;
+                    document.getElementById('name').value = "";
+                    document.getElementById('email').value = "";
+                } else {
+                    msg.style.color = "red";
+                    msg.innerText = data.message || "Registration failed";
+                }
+            } catch (err) {
+                msg.innerText = "Error connecting to server.";
+            }
+        };
+
+        btnShow.onclick = async () => {
+            try {
+                const res = await fetch('/api/users');
+                const result = await res.json();
+
+                if (res.ok) {
+                    const tbody = document.querySelector('#usersTable tbody');
+                    tbody.innerHTML = ""; 
+
+                    result.data.forEach(user => {
+                        const row = `<tr>
+                                            <td>${user.userName}</td>
+                                            <td>${user.userEmail}</td>
+                                         </tr>`;
+                        tbody.innerHTML += row;
+                    });
+
+                    document.getElementById('userList').style.display = "block";
+                }
+            } catch (err) {
+                alert("Could not fetch users. Make sure API is running.");
+            }
+        };
+    </script>
+</body>
+</html>
