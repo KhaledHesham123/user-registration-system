@@ -20,7 +20,7 @@ Implemented **CQRS (Command Query Responsibility Segregation)** to separate read
 
 ---
 
-## 🚀 How to Run (Zero-Touch Setup)
+##  How to Run (Zero-Touch Setup)
 
 This project is designed for a "Plug and Play" experience.
 
@@ -35,7 +35,7 @@ This project is designed for a "Plug and Play" experience.
 
 ---
 
-## 💡 Note for Reviewers
+##  Note for Reviewers
 
 I focused on delivering a clean, functional, and well-architected solution that meets the specific task requirements. However, I have extensive experience in building more complex systems, including:
 - **Identity & Security:** Implementing JWT Authentication, Refresh Tokens.
